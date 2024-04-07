@@ -14,14 +14,27 @@ use std::i32;
 // 6. Challenge: Create a benchmark that measures the speed of sploosh(8, 9, 10)
 // - Speed up the implementation of sploosh(8, 9, 10) without breaking the other tests.
 // - Hint: See Cargo.toml to get you started
-pub const PRE_SPLOOSH: i32 = 8 + 9 - 10; // pre-calculated value
+// approach #1:
+// pub const PRE_SPLOOSH: i32 = 8 + 9 - 10; // pre-calculated value
 
-pub fn sploosh(x: i32, y: i32, z: i32) -> i32 {
-    match (x, y, z) {
-        (x, _, _) if x < 0 => 99,
-        (1, 2, 3) => 4,
-        (5, 6, 7) => 3,
-        _ => PRE_SPLOOSH, // use pre-calculated value for (8,9,10) and others.
+// pub fn sploosh(x: i32, y: i32, z: i32) -> i32 {
+//     match (x, y, z) {
+//         (x, _, _) if x < 0 => 99,
+//         (1, 2, 3) => 4,
+//         (5, 6, 7) => 3,
+//         _ => PRE_SPLOOSH, // use pre-calculated value for (8,9,10) and others.
+//     }
+// }
+
+// approach #2:
+pub fn sploosh(x:i32, y:i32, z:i32)->i32 {
+    if x < 0 {
+        return 99;
+    }
+    match (x,y,z) {
+        (1,2,3)=>4,
+        (5,6,7)=>3,
+        _ => x+y-z,
     }
 }
 
