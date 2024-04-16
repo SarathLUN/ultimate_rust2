@@ -1,5 +1,6 @@
 // Silence some warnings, so they don't distract from the exercise.
 #![allow(dead_code, unused_imports, unused_variables)]
+
 use crossbeam::channel;
 use std::thread;
 use std::time::Duration;
@@ -46,47 +47,47 @@ fn main() {
     // - Create variables `tx` and `rx` and assign them to the sending and receiving ends of an
     // unbounded channel. Hint: An unbounded channel can be created with `channel::unbounded()`
 
-        let (tx, rx) = channel::unbounded();
+    let (tx, rx) = channel::unbounded();
 
-        // Cloning a channel makes another variable connected to that end of the channel so that you can
-        // send it to another thread. We want another variable that can be used for sending...
-        let tx2 = tx.clone();
+    // Cloning a channel makes another variable connected to that end of the channel so that you can
+    // send it to another thread. We want another variable that can be used for sending...
+    let tx2 = tx.clone();
 
-        // 4. Examine the flow of execution of "Thread A" and "Thread B" below. Do you see how their
-        // output will mix with each other?
-        // - Run this code. Notice the order of output from Thread A and Thread B.
-        // - Increase the value passed to the first `sleep_ms()` call in Thread A so that both the
-        // Thread B outputs occur *before* Thread A outputs anything.
-        // - Run the code again and make sure the output comes in a different order.
+    // 4. Examine the flow of execution of "Thread A" and "Thread B" below. Do you see how their
+    // output will mix with each other?
+    // - Run this code. Notice the order of output from Thread A and Thread B.
+    // - Increase the value passed to the first `sleep_ms()` call in Thread A so that both the
+    // Thread B outputs occur *before* Thread A outputs anything.
+    // - Run the code again and make sure the output comes in a different order.
 
-        // Thread A
-        let handle_a = thread::spawn(move || {
-            sleep_ms(400);
-            tx2.send("Thread A: 1").unwrap();
-            sleep_ms(200);
-            tx2.send("Thread A: 2").unwrap();
-        });
+    // Thread A
+    let handle_a = thread::spawn(move || {
+        sleep_ms(400);
+        tx2.send("Thread A: 1").unwrap();
+        sleep_ms(200);
+        tx2.send("Thread A: 2").unwrap();
+    });
 
-        sleep_ms(100); // Make sure Thread A has time to get going before we spawn Thread B
+    sleep_ms(100); // Make sure Thread A has time to get going before we spawn Thread B
 
-        // Thread B
-        let handle_b = thread::spawn(move || {
-            sleep_ms(0);
-            tx.send("Thread B: 1").unwrap();
-            sleep_ms(200);
-            tx.send("Thread B: 2").unwrap();
-        });
+    // Thread B: only start after above sleep 100ms.
+    let handle_b = thread::spawn(move || {
+        sleep_ms(0);
+        tx.send("Thread B: 1").unwrap();
+        sleep_ms(200);
+        tx.send("Thread B: 2").unwrap();
+    });
 
-        // Using a Receiver channel as an iterator is a convenient way to get values until the channel
-        // gets closed. A Receiver channel is automatically closed once all Sender channels have been
-        // closed. Both our threads automatically close their Sender channels when they exit and the
-        // destructors for the channels get automatically called.
-        for msg in rx {
-            println!("Main thread: Received {}", msg);
-        }
+    // Using a Receiver channel as an iterator is a convenient way to get values until the channel
+    // gets closed. A Receiver channel is automatically closed once all Sender channels have been
+    // closed. Both our threads automatically close their Sender channels when they exit and the
+    // destructors for the channels get automatically called.
+    for msg in rx {
+        println!("Main thread: Received {}", msg);
+    }
 
-        // 5. Oops, we forgot to join "Thread A" and "Thread B". That's bad hygiene!
-        // - Use the thread handles to join both threads without getting any compiler warnings.
+    // 5. Oops, we forgot to join "Thread A" and "Thread B". That's bad hygiene!
+    // - Use the thread handles to join both threads without getting any compiler warnings.
     let _ = handle_a.join();
     let _ = handle_b.join();
 
@@ -95,10 +96,10 @@ fn main() {
     // On the child threads print out the values you receive. Close the sending side in the main
     // thread by calling `drop(tx)` (assuming you named your sender channel variable `tx`). Join
     // the child threads.
-    let (tx_challenge, rx_challenge)=channel::unbounded();
+    let (tx_challenge, rx_challenge) = channel::unbounded();
     let rx_challenge_2 = rx_challenge.clone();
 
-    fn temp_recv(rx: channel::Receiver<i32>){
+    fn temp_recv(rx: channel::Receiver<i32>) {
         for msg in rx {
             println!("Child thread {:?}: Received {}", thread::current().id(), msg);
         }
@@ -111,7 +112,7 @@ fn main() {
     });
 
     for i in 1..11 {
-        println!("Main thread: Sending {}",i);
+        println!("Main thread: Sending {}", i);
         tx_challenge.send(i).unwrap();
         sleep_ms(100);
     }
