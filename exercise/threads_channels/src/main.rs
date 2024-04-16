@@ -119,5 +119,5 @@ fn main() {
     drop(tx_challenge);
     handle_c.join().unwrap();
     handle_d.join().unwrap();
-    println!("Main thread: Exiting.")
+    println!("Main thread: Exiting.");
 }
