@@ -12,5 +12,27 @@
 
 ### Example code directory: l024-channels
 ```shell
-cargo run 
+RUST_LOG=info cargo run 
 ```
+
+```shell
+[2024-04-16T05:13:39Z INFO  l024_channels] ORDER: polish dog
+[2024-04-16T05:13:39Z INFO  l024_channels] ORDER: caesar salad
+[2024-04-16T05:13:39Z INFO  l024_channels] zack receives an order for polish dog
+[2024-04-16T05:13:39Z INFO  l024_channels] ORDER: onion soup
+[2024-04-16T05:13:39Z INFO  l024_channels] alice receives an order for caesar salad
+[2024-04-16T05:13:39Z INFO  l024_channels] ORDER: reuben sandwich
+[2024-04-16T05:13:40Z INFO  l024_channels] zack sends a HotDog
+[2024-04-16T05:13:40Z INFO  l024_channels] zack receives an order for onion soup
+[2024-04-16T05:13:40Z INFO  l024_channels] Order Up! -> HotDog
+[2024-04-16T05:13:40Z INFO  l024_channels] alice sends a Salad
+[2024-04-16T05:13:40Z INFO  l024_channels] alice receives an order for reuben sandwich
+[2024-04-16T05:13:40Z INFO  l024_channels] Order Up! -> Salad
+[2024-04-16T05:13:41Z INFO  l024_channels] zack sends a Soup
+[2024-04-16T05:13:41Z INFO  l024_channels] Order Up! -> Soup
+[2024-04-16T05:13:42Z INFO  l024_channels] alice sends a Sandwich
+[2024-04-16T05:13:42Z INFO  l024_channels] Order Up! -> Sandwich
+[2024-04-16T05:13:42Z INFO  l024_channels] Shop closed!
+
+```
+- above output, we can see the threads are running parallel. 
