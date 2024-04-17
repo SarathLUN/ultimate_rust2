@@ -45,3 +45,21 @@ curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz 
 - then in the main function before `game.run()` we need to add game logic by calling `game.add_logic()` with param as our game logic function
 - we can have more than 1 game logic functions if needed and add them one-by-one in order we want to
  
+## Lesson 31: Sprites
+
+- Sprites are 2D images with associated data like transform (translation, rotation, scale), collider and metadata.
+- They are the building blocks for game graphics.
+- Sprites are created and manipulated through the `Engine` struct.
+- Use `add_sprite` method with a label and image path or `SpritePreset` enum for predefined sprites.
+- The method returns a mutable reference to the created sprite.
+- **Translation:** Uses a `Vec2` to define the sprite's position (x, y) on screen.
+  - (0.0, 0.0) is the center of the screen.
+  - Positive X goes right, positive Y goes up.
+  - Coordinates are in logical pixels.
+- **Rotation:** Specified in radians. 0 degrees faces right, pi radians faces up, 2 pi radians is back to facing right.
+  - use `UP`, `DOWN`, `LEFT`, `RIGHT` constants for convenience.
+- **Scale:** default to 1.0 (100%). Values less than 1 shrink, greater than 1 enlarge the sprite.
+- Sprite Layers: define the order in which sprites are spawn. Higher layer is drawn on top of the lower layers.
+- Default layer is 0.0.
+- Use a value up to 999.0 to ensure a sprite is drawn on top of most others.
+ 
