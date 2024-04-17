@@ -23,6 +23,13 @@ fn main() {
     let mut game = Game::new();
 
     // get your game stuff ready here
-
+    game.add_logic(game_logic);
     game.run(GameState::default());
+}
+
+fn game_logic(engine: &mut Engine, game_state: &mut GameState){
+    for _ in 1..10 {
+        game_state.current_score += 1;
+        println!("Current score: {}",game_state.current_score);
+    }
 }
