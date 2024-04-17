@@ -19,3 +19,9 @@ cargo new project-game-prototype-with-rusty-engine
 curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz | tar -zxv --strip-components=1 rusty_engine-main/assets
 ```
 
+## Lesson 28: Engine Initialization
+
+- load `rusty_engine::prelude` into our program
+- create mutable game engine
+- then we can run our game via the `run(game_state)` method. Ex: `game.run(())` for now we just passing empty tuple for game_state argument.
+- now we can run our game (`cargo run`)
