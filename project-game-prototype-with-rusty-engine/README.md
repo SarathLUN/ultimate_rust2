@@ -100,3 +100,27 @@ curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz 
 - Must be convex (no inward corners).
 - Hold `Shift` key while clicking to adjust the last point
 - It will write the collider to a file with extension `.collider`.
+
+## Lesson 33: Keyboard Input
+
+**Keyboard Input in Rusty Engine:**
+
+- provide access to keyboard state through the `engin.keyboard_state` field.
+- focus on keyboard state for interactive action like character movement.
+- keyboard events (every keystroke) are covered in the written tutorial.
+
+**Keyboard State:**
+
+- represents a snapshot of currently pressed/unpressed keys at the start of each frame.
+- use the `pressed` method with a `KeyCode` enum value to check a specific key's state.
+- `KeyCode` comes from the Bevy crate and defines all possible key codes.
+
+**Moving a Sprite with Keyboard:**
+
+- use the pressed state of relevant keys (e.g., `Up`, `Down`, `Left`, `Right`) to determine movement direction.
+- define movement speed as a constant (e.g., `MOVEMENT_SPEED`).
+- update the sprite's position based on pressed keys and movement speed.
+
+**Handling Multiple Keys:**
+
+- use the `press_any` method with and array of `KeyCode` values to check if any of those keys are pressed.
