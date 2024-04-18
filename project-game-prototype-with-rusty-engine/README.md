@@ -63,3 +63,40 @@ curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz 
 - Default layer is 0.0.
 - Use a value up to 999.0 to ensure a sprite is drawn on top of most others.
  
+## Lesson 32: Colliders
+
+**Collisions in Rusty Engine:**
+
+- Collisions are detected between sprites with colliders enabled.
+- By default, collisions are disabled.
+- A `collision` field on the sprite struct needs to set to `true` for collision detection.
+- Collision events are triggered when sprites with enabled colliders begin or end overlapping.
+- A `collision_events` vector stores these events.
+
+**Collision Events:**
+
+- Collision events represented by `CollissionEvent` struct.
+- contain a `state` field (`CollisionState::Begin` or `CollisionState::End`) indicate collision start or end.
+- contain a `pair` field, a tuple of string representing the label of colliding sprites.
+- Order of label in tuple is non-deterministic.
+
+**Handling Collisions:**
+
+- we can loop through `collision_events` to process them.
+- access the `state` and `pair` fields to determine collision detail.
+
+**Colliders:**
+
+- Convex polygons used for collision detection.
+- Visualized with white lines when `engine.show_colliders` is set to `true`.
+- Stored in `.collider` file next to the corresponding sprite image file.
+- Preset sprites come with predefined colliders.
+- Custom collider required the `Collider` example program for creation.
+
+**Creating Colliders with Collider Example:**
+
+- Allows creating colliders for custom sprite images.
+- Click points in a clockwise direction to define the collider polygon.
+- Must be convex (no inward corners).
+- Hold `Shift` key while clicking to adjust the last point
+- It will write the collider to a file with extension `.collider`.

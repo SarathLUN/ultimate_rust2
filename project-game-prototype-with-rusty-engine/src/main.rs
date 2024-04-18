@@ -25,15 +25,20 @@ fn main() {
     // get your game stuff ready here
     let player = game.add_sprite("player", SpritePreset::RacingCarBlue);
     player.translation = Vec2::new(0.0, 0.0);
-    // player.rotation = 0.0; // = player.rotation = RIGHT;
-    player.rotation = std::f32::consts::FRAC_PI_2; // = player.rotation = UP;
+    player.rotation = 0.0; // = player.rotation = RIGHT;
+    // player.rotation = std::f32::consts::FRAC_PI_2; // = player.rotation = UP;
     player.scale = 1.0; // this is the default size 100%
-    player.layer = 0.1; // 0.0 is the default layer, and the highest layer is 999.0
+    // player.layer = 0.1; // 0.0 is the default layer, and the highest layer is 999.0
+    player.collision = true;
 
     // create a temporary sprite to demonstrate with layer
-    let temporary = game.add_sprite("temporary", SpritePreset::RacingCarRed);
-    temporary.translation = Vec2::new(30.0, 0.0);
-    temporary.layer = 0.0;
+    let car1 = game.add_sprite("car1", "sprite/cuddlyferris.png");
+    car1.translation = Vec2::new(300.0, 0.0);
+    // car1.rotation = LEFT;
+    // car1.layer = 0.0;
+    car1.scale = 0.3;
+    car1.collision = true;
+
     // add game logic here
     game.add_logic(game_logic);
 
@@ -42,6 +47,20 @@ fn main() {
 }
 
 fn game_logic(engine: &mut Engine, game_state: &mut GameState) {
-    // game_state.current_score += 1;
-    // println!("Current score: {}",game_state.current_score);
+    // engine.show_colliders = true;
+    for event in engine.collision_events.drain(..) {
+        // println!("{:#?}", event);
+        if event.state == CollisionState::Begin && event.pair.one_starts_with("player") {
+            // remove the sprite the player collided with
+            for label in [event.pair.0, event.pair.1] {
+                if label != "player" {
+                    engine.sprites.remove(&label);
+                }
+            }
+            game_state.current_score += 1;
+            println!("Current score: {}", game_state.current_score);
+        }
+    }
+    let player = engine.sprites.get_mut("player").unwrap();
+    player.translation.x += 100.0 * engine.delta_f32;
 }
