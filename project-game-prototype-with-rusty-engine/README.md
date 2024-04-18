@@ -124,3 +124,24 @@ curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz 
 **Handling Multiple Keys:**
 
 - use the `press_any` method with and array of `KeyCode` values to check if any of those keys are pressed.
+
+## Lesson 34: Mouse Input
+
+**Mouse Input in Rusty Engine:**
+
+- similar to keyboard input, there's mouse state and mouse events.
+- focuses on mouse state for common interactions like clicking.
+- mouse events (individual clicks) are covered in the written tutorial.
+
+**Mouse State:**
+
+- provides information about the current mouse state.
+- use the `left_pressed` method of `mouse_state` to check if the left mouse button is clicked.
+- the `location` method of `mouse_state` returns an `Option<Vec2>`, indicating the mouse position within the window (if available).
+
+**Spawning Sprites on Mouse Click:**
+
+- check if the left mouse button is pressed (engine.mouse_state.left_pressed).
+- if a mouse location exists (mouse_state.location), use it to determine the spawn location for the new sprite.
+- generate unique labels for each spawned sprite (e.g., using a counter).
+- add the new sprite to the engine using `engine.add_sprite` with label, image path, and location.
