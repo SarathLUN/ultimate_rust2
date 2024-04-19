@@ -187,3 +187,26 @@ curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz 
 - set the desired volume (0.0 to 1.0).
 - played in a "fire-and-forget" manner, terminating after playback.
 
+## Lesson 37: Timer
+
+**Timer in Rusty Engine:**
+
+- leverages Bevy's `Timer` struct.
+- Timers are inexpensive to create and manage.
+
+**Creating Timer:**
+
+- use the `from_seconds` method to create a timer.
+- specify the duration (in seconds) and whether it's repeating or not.
+- a repeating timer restarts counting down from the initial duration when it reaches zero.
+
+**Updating Timers:**
+
+- call the `tick` method with the elapsed time (`engine.delta`).
+- this advances the timer's internal counter.
+
+**Checking Timer Completion:**
+
+- the `tick` method returns an immutable reference to the timer.
+- access the `finished` field to check if the timer has recently completed its countdown.
+
