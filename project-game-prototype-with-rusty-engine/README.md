@@ -145,3 +145,24 @@ curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz 
 - if a mouse location exists (mouse_state.location), use it to determine the spawn location for the new sprite.
 - generate unique labels for each spawned sprite (e.g., using a counter).
 - add the new sprite to the engine using `engine.add_sprite` with label, image path, and location.
+
+## Lesson 35: Text
+
+**Text in Rusty Engine:**
+
+- similar to sprites in terms of position and transformation (translation, rotation, scale, layer).
+- use a world coordinate system for placement. 
+- defined by a string value, font, and font size.
+
+**Creating Text Elements:**
+
+- use the `add_text` method of the engine or game struct.
+- provide a unique label for identification.
+- specify the text string to be displayed.
+- set the desired position using the `translation` field (x, y Coordinates).
+
+**Updating Text Content:**
+
+- get a mutable reference to the text elements using `get_mut` on the `texts` hash map.
+- modify the text content using the reference.
+
