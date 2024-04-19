@@ -22,6 +22,9 @@ impl Default for GameState {
 fn main() {
     let mut game = Game::new();
 
+    // background music audio
+    game.audio_manager.play_music(MusicPreset::Classy8Bit, 0.1);
+
     // get your game stuff ready here
     let player = game.add_sprite("player", SpritePreset::RacingCarBlue);
     player.translation = Vec2::new(0.0, 0.0);
@@ -58,6 +61,9 @@ fn game_logic(engine: &mut Engine, game_state: &mut GameState) {
     for event in engine.collision_events.drain(..) {
         // println!("{:#?}", event);
         if event.state == CollisionState::Begin && event.pair.one_starts_with("player") {
+            // play sound effect on hit
+            engine.audio_manager.play_sfx(SfxPreset::Minimize1, 0.3);
+
             // remove the sprite the player collided with
             for label in [event.pair.0, event.pair.1] {
                 if label != "player" {

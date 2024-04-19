@@ -166,3 +166,24 @@ curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz 
 - get a mutable reference to the text elements using `get_mut` on the `texts` hash map.
 - modify the text content using the reference.
 
+## Lesson 36: Audio
+
+**Audio in Rusty Engine:**
+
+- basic audio system supporting looping music and concurrent sound effects.
+- support Ogg, MP3, FLAC, WAV audio formats.
+- access through the engine's audio manager.
+
+**Music Playback:**
+
+- use the `play_music` method of the audio manager.
+- provide a `MusicPreset` enum variant or a path to a music file within the assets directory.
+- set the desired volume (0.0 to 1.0).
+
+**Sound Effects:**
+
+- use the `play_sfx` method of the audio manager.
+- provide a `SfxPreset` enum variant or a path to a sound effect file within the assets directory.
+- set the desired volume (0.0 to 1.0).
+- played in a "fire-and-forget" manner, terminating after playback.
+
