@@ -23,6 +23,13 @@ impl Default for GameState {
 fn main() {
     let mut game = Game::new();
 
+    // use `window_settings`
+    game.window_settings(Window {
+        title: "My Awesome Game".into(),
+        // resolution: WindowResolution::new(800.0, 200.0),
+        ..Default::default()
+    });
+
     // background music audio
     game.audio_manager.play_music(MusicPreset::Classy8Bit, 0.1);
 
@@ -30,9 +37,9 @@ fn main() {
     let player = game.add_sprite("player", SpritePreset::RacingCarBlue);
     player.translation = Vec2::new(0.0, 0.0);
     player.rotation = 0.0; // = player.rotation = RIGHT;
-                           // player.rotation = std::f32::consts::FRAC_PI_2; // = player.rotation = UP;
+    // player.rotation = std::f32::consts::FRAC_PI_2; // = player.rotation = UP;
     player.scale = 1.0; // this is the default size 100%
-                        // player.layer = 0.1; // 0.0 is the default layer, and the highest layer is 999.0
+    // player.layer = 0.1; // 0.0 is the default layer, and the highest layer is 999.0
     player.collision = true;
 
     // create a temporary sprite to demonstrate with layer
@@ -58,6 +65,24 @@ fn main() {
 }
 
 fn game_logic(engine: &mut Engine, game_state: &mut GameState) {
+    // using `should_exit`: press Q to quit the game
+    if engine.keyboard_state.just_pressed(KeyCode::Q) {
+        engine.should_exit = true;
+    }
+
+    // using `time_since_startup_f64` to make score text slide up and down
+    const OFFSET_GAP: f64 = 5.0;
+    const OFFSET_MOVEMENT_SPEED: f64 = 3.0;
+    let offset = ((engine.time_since_startup_f64 * OFFSET_MOVEMENT_SPEED).cos() * OFFSET_GAP) as f32;
+    // keep text near the edges of the screen
+    let score = engine.texts.get_mut("score").unwrap();
+    score.translation.x = engine.window_dimensions.x / 2.0 - 80.0;
+    score.translation.y = engine.window_dimensions.y / 2.0 - 30.0 + offset;
+    let high_score = engine.texts.get_mut("high_score").unwrap();
+    high_score.translation.x = -engine.window_dimensions.x / 2.0 + 100.0;
+    high_score.translation.y = engine.window_dimensions.y / 2.0 - 30.0;
+
+
     // engine.show_colliders = true;
     for event in engine.collision_events.drain(..) {
         // println!("{:#?}", event);

@@ -210,3 +210,19 @@ curl -L https://github.com/CleanCut/rusty_engine/archive/refs/heads/main.tar.gz 
 - the `tick` method returns an immutable reference to the timer.
 - access the `finished` field to check if the timer has recently completed its countdown.
 
+## Lesson 38: Engine & Game Structs
+
+**Engine Struct:**
+
+- `should_exit`: is boolean field to trigger clean exist at the end of the frame.
+- use `should_exit` by setting it to `true` to initiate a graceful exit from the game loop.
+- `window_dimentions`: `Vec2` representing the window's width and height in logical pixels.
+- update text or sprite positions based on window dimensions for dynamic resizing.
+- `time_since_startup_f64`: 64-bit floating-point value tracking time elapsed since game start.
+- useful for creating periodic animations (e.g., oscillation effects).
+
+**Game Struct:**
+
+- provides access to all `Engine` struct fields.
+- allows setting window properties through the `WindowDescriptor` struct.
+  - Common properties include `title`, `width`, `height`.
